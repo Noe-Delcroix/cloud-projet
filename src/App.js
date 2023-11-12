@@ -1,10 +1,10 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import Signup from './components/Signup';
-import VerifyAccount from './components/VerifyAccount';
-import Login from './components/Login';
+import Signup from './pages/Signup';
+import VerifyAccount from './pages/VerifyAccount';
+import Login from './pages/Login';
 import {Toaster} from "react-hot-toast";
-import {Application} from "./components/Application";
+import {Application} from "./pages/Application";
 
 
 function App() {
