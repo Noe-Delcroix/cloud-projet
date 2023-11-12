@@ -28,7 +28,10 @@ const Login = () => {
             onSuccess: data => {
                 console.log('onSuccess:', data);
                 toast.success('Successfully logged in!')
-                navigate('/app', { state: { data } });
+
+                sessionStorage.setItem('userData', JSON.stringify(data));
+
+                navigate('/app');
             },
             onFailure: err => {
                 console.error('onFailure:', err);

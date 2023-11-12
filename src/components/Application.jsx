@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
 
 export const Application = () => {
     const navigate = useNavigate();
-    const location = useLocation();
 
-    const [session, setSession] = useState(location.state?.data || '');
+    const [session, setSession] = useState(JSON.parse(sessionStorage.getItem('userData')) || '');
 
     useEffect(() => {
         if (!session) {
@@ -17,6 +16,11 @@ export const Application = () => {
     const logout = () => {
         console.log("logout")
         toast.success("Successfully logged out!")
+
+        // Effacer les données de session
+        sessionStorage.removeItem('userData');
+        setSession('')
+
         navigate("/login")
     }
 
