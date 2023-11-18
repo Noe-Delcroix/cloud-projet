@@ -27,7 +27,11 @@ export const Application = () => {
     const fetchMessages = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get('https://396fjl6556.execute-api.eu-west-1.amazonaws.com/dev/messages');
+            const response = await axios.get('https://396fjl6556.execute-api.eu-west-1.amazonaws.com/dev/messages', {
+                headers: {
+                    Authorization: `Bearer ${session.idToken.jwtToken}`
+                }
+            });
             console.log(response.data?.body)
             setMessages(JSON.parse(response.data?.body));
         } catch (error) {
