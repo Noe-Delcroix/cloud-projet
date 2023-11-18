@@ -58,6 +58,10 @@ export const Application = () => {
             // Send a POST request to the specified URL with the required body format
             const response = await axios.post('https://396fjl6556.execute-api.eu-west-1.amazonaws.com/dev/messages', {
                 body: JSON.stringify(messageBody)
+            },{
+                headers: {
+                    Authorization: `Bearer ${session.idToken.jwtToken}`
+                }
             });
 
             setNewMessage('');
