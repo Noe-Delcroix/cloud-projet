@@ -1,5 +1,13 @@
 # Projet Cloud
 
+## RAF :
+- [ ] Responsive
+- [ ] Scroll infini sans le bouton
+- [ ] Bot météo
+
+- [ ] Schéma structure
+- [ ] Analyse prévisionnelle des chiffres
+
 ## Configuration
 
 ### .env
