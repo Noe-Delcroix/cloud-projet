@@ -5,6 +5,7 @@ import axios from "axios";
 import {Message} from "../components/Message";
 import {OwnMessage} from "../components/OwnMessage";
 import {BeatLoader} from "react-spinners";
+import {ChevronUpIcon} from "@heroicons/react/solid";
 
 export const Application = () => {
     const navigate = useNavigate();
@@ -95,6 +96,7 @@ export const Application = () => {
 
             setNewMessage('');
             setIsSendingMessage(false)
+            window.scrollTo({top: 0, behavior: 'smooth'})
         } catch (error) {
             toast.error(`Failed to send message: ${error}`);
             setIsSendingMessage(false)
@@ -135,7 +137,7 @@ export const Application = () => {
             </div>
 
 
-            <div className="h-full flex flex-col-reverse mx-[150px] pt-[60px] pb-[70px] bg-gray-200 shadow px-5">
+            <div className="h-full flex flex-col mx-[150px] pt-[60px] pb-[70px] bg-gray-200 shadow px-5">
                 {messages.map((message, index) => (
                             message.user_id === session.idToken.payload.sub ? (
                                 <OwnMessage
@@ -167,6 +169,14 @@ export const Application = () => {
                     </button>
                 }
 
+            </div>
+
+            <div className="fixed bottom-[70px] right-[20px] z-50 w-[50px] h-[50px]">
+                <button
+                    className="bg-blue-500 w-full h-full text-white font-bold py-2 px-4 rounded-full shadow-xl"
+                    onClick={()=> window.scrollTo({top: 0, behavior: 'smooth'})}>
+                    <ChevronUpIcon></ChevronUpIcon>
+                </button>
             </div>
 
 
