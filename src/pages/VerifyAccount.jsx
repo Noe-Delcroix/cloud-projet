@@ -33,10 +33,8 @@ const VerifyAccount = () => {
             new Promise((resolve, reject) => {
                 user.confirmRegistration(code, true, (err, result) => {
                     if (err) {
-                        console.error(err);
                         reject(err);
                     } else {
-                        console.log(result);
                         resolve(result);
                     }
                 });
@@ -63,10 +61,8 @@ const VerifyAccount = () => {
             new Promise((resolve, reject) => {
                 user.resendConfirmationCode((err, result) => {
                     if (err) {
-                        console.error(err);
                         reject(err);
                     } else {
-                        console.log(result);
                         resolve(result);
                     }
                 });

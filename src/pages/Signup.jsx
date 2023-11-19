@@ -3,18 +3,25 @@ import UserPool from '../config/cognitoConfig';
 import {CognitoUserAttribute} from "amazon-cognito-identity-js";
 import {Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import PasswordInput from "../components/Passwordinput";
 
 const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [nickname, setNickname] = useState('');
     const navigate = useNavigate();
 
     const onSubmit = event => {
         event.preventDefault();
 
-        if (!email || !password || !nickname) {
+        if (!email || !password || !nickname || !confirmPassword) {
             toast.error('Please fill out all fields');
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            toast.error('Passwords do not match');
             return;
         }
 
@@ -29,10 +36,8 @@ const Signup = () => {
             new Promise((resolve, reject) => {
                 UserPool.signUp(email, password, attributeList, null, (err, data) => {
                     if (err) {
-                        console.error(err);
                         reject(err);
                     } else {
-                        console.log(data);
                         resolve(data);
                     }
                 });
@@ -71,12 +76,17 @@ const Signup = () => {
                         />
                     </div>
                     <div className="mb-2 w-2/3">
-                        <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                        <PasswordInput
                             value={password}
-                            type="password"
-                            onChange={(event) => setPassword(event.target.value)}
                             placeholder="Password"
+                            onChange={(event) => setPassword(event.target.value)}
+                        />
+                    </div>
+                    <div className="mb-2 w-2/3">
+                        <PasswordInput
+                            value={confirmPassword}
+                            placeholder="Confirm Password"
+                            onChange={(event) => setConfirmPassword(event.target.value)}
                         />
                     </div>
                     <div className="flex items-center justify-between">

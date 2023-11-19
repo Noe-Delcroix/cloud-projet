@@ -4,12 +4,13 @@ import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import UserPool from '../config/cognitoConfig';
 import {Link} from "react-router-dom";
 import toast from "react-hot-toast";
+import PasswordInput from "../components/Passwordinput";
 
 const Login = () => {
     const location = useLocation();
     const [email, setEmail] = useState(location.state?.email || '');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate(); // Ajout de useNavigate
+    const navigate = useNavigate();
 
     const onSubmit = event => {
         event.preventDefault();
@@ -26,7 +27,7 @@ const Login = () => {
 
         user.authenticateUser(authDetails, {
             onSuccess: data => {
-                console.log('onSuccess:', data);
+                //console.log('onSuccess:', data);
                 toast.success('Successfully logged in!')
 
                 sessionStorage.setItem('userData', JSON.stringify(data));
@@ -34,8 +35,6 @@ const Login = () => {
                 navigate('/app');
             },
             onFailure: err => {
-                console.error('onFailure:', err);
-
                 if (err.code === 'UserNotConfirmedException') {
                     navigate('/verify', { state: { email } });
                     toast.error('Your account is not verified. Please verify your account.');
@@ -45,7 +44,7 @@ const Login = () => {
                 toast.error(err.message || JSON.stringify(err));
             },
             newPasswordRequired: data => {
-                console.log('newPasswordRequired:', data);
+
             }
         });
     };
@@ -65,12 +64,10 @@ const Login = () => {
                         />
                     </div>
                     <div className="mb-2 w-2/3">
-                        <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                        <PasswordInput
                             value={password}
-                            type="password"
-                            onChange={event => setPassword(event.target.value)}
                             placeholder="Password"
+                            onChange={event => setPassword(event.target.value)}
                         />
                     </div>
                     <div className="flex items-center justify-between">

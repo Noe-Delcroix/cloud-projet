@@ -7,8 +7,6 @@ import {OwnMessage} from "../components/OwnMessage";
 import {BeatLoader} from "react-spinners";
 
 export const Application = () => {
-    console.log("Application")
-
     const navigate = useNavigate();
 
     const [session, setSession] = useState(JSON.parse(sessionStorage.getItem('userData')) || '');
@@ -24,7 +22,6 @@ export const Application = () => {
 
 
     useEffect(() => {
-        console.log("useEffect")
         if (!session) {
             navigate('/login');
         }else {
@@ -42,7 +39,7 @@ export const Application = () => {
             if (lastKey) {
                 params.lastKey = lastKey;
             }
-            console.log("sending : ",params)
+            //console.log("sending : ",params)
 
             const response = await axios.get('https://396fjl6556.execute-api.eu-west-1.amazonaws.com/dev/messages?lastkey='+lastKey+'&limit=10', {
                 headers: {
@@ -50,7 +47,7 @@ export const Application = () => {
                 }
             });
             const data= JSON.parse(response.data?.body);
-            console.log("received : ",data);
+            //console.log("received : ",data);
             setMessages(prevMessages => [...prevMessages, ...data.data]);
             setLastKey(data.lastKey);
             setHasMoreMessages(data.lastKey !== null);
@@ -79,7 +76,6 @@ export const Application = () => {
         };
 
         try {
-            // Send a POST request to the specified URL with the required body format
             const response = await axios.post('https://396fjl6556.execute-api.eu-west-1.amazonaws.com/dev/messages', {
                 body: JSON.stringify(messageBody)
             },{
@@ -88,7 +84,6 @@ export const Application = () => {
                 }
             });
 
-            // Prepend new message to the message list
             setMessages(prevMessages => [
                 {
                     user_id: session.idToken.payload.sub,
@@ -115,7 +110,6 @@ export const Application = () => {
     };
 
     const logout = () => {
-        console.log("logout")
         toast.success("Successfully logged out!")
 
         sessionStorage.removeItem('userData');
@@ -161,7 +155,7 @@ export const Application = () => {
 
                 {isLoadingMessages &&
                     <div className="flex justify-center items-center">
-                        <BeatLoader color="#4A90E2" size={15} /> {/* Using BeatLoader */}
+                        <BeatLoader color="#4A90E2" size={15} />
                     </div>}
 
                 {hasMoreMessages &&
