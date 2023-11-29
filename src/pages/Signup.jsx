@@ -56,10 +56,10 @@ const Signup = () => {
 
     return (
         <div className="flex flex-col items-center justify-center h-screen">
-            <div className="w-1/3 flex flex-col items-center justify-center bg-white shadow-md rounded px-8 py-4 mb-4">
+            <div className="lg:w-1/3 sm:w-2/3 w-full flex flex-col items-center justify-center bg-white shadow-md rounded px-8 py-4 mb-4">
                 <h1 className="text-2xl font-bold mb-8">Create an account</h1>
                 <form onSubmit={onSubmit} className="w-full flex flex-col items-center">
-                    <div className="mb-4 w-2/3">
+                    <div className="mb-4 lg:w-2/3 w-3/4">
                         <input
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             value={nickname}
@@ -67,7 +67,7 @@ const Signup = () => {
                             placeholder="Username"
                         />
                     </div>
-                    <div className="mb-4 w-2/3">
+                    <div className="mb-4 lg:w-2/3 w-3/4">
                         <input
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             value={email}
@@ -75,14 +75,14 @@ const Signup = () => {
                             placeholder="Email"
                         />
                     </div>
-                    <div className="mb-2 w-2/3">
+                    <div className="mb-2 lg:w-2/3 w-3/4">
                         <PasswordInput
                             value={password}
                             placeholder="Password"
                             onChange={(event) => setPassword(event.target.value)}
                         />
                     </div>
-                    <div className="mb-2 w-2/3">
+                    <div className="mb-2 lg:w-2/3 w-3/4">
                         <PasswordInput
                             value={confirmPassword}
                             placeholder="Confirm Password"

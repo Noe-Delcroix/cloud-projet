@@ -77,12 +77,12 @@ const VerifyAccount = () => {
 
     return (
         <div className="flex flex-col items-center justify-center h-screen">
-            <div className="w-1/3 flex flex-col items-center justify-center bg-white shadow-md rounded px-8 py-4 mb-4">
+            <div className="lg:w-1/3 sm:w-2/3 w-full  flex flex-col items-center justify-center bg-white shadow-md rounded px-8 py-4 mb-4">
                 <h1 className="text-2xl font-bold mb-8">Verify your account</h1>
 
-                <p className="mb-2">Please enter the 6 digits code that was sent to you at <strong className="text-blue-500">{email}</strong></p>
+                <p className="mb-2 text-center">Please enter the 6 digits code that was sent to you at <strong className="text-blue-500">{email}</strong></p>
 
-                <p className="mb-2 text-[0.7em]">
+                <p className="mb-2 text-[0.7em] text-center">
                     Can't find your verification code?
                     <button
                         onClick={resendVerificationCode}

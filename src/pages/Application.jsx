@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -21,6 +21,7 @@ export const Application = () => {
     const [isLoadingMessages, setIsLoadingMessages] = useState(false);
     const [isSendingMessage, setIsSendingMessage] = useState(false);
 
+    const scrollRef = useRef(null);
 
     useEffect(() => {
         if (!session) {
@@ -31,6 +32,7 @@ export const Application = () => {
     }, [session]);
 
     const fetchMessages = async () => {
+        if (!hasMoreMessages || isLoadingMessages) return;
         setIsLoadingMessages(true);
         try {
 
@@ -56,10 +58,6 @@ export const Application = () => {
             toast.error('Failed to fetch messages:', error);
         }
         setIsLoadingMessages(false);
-    };
-
-    const loadMoreMessages = () => {
-        fetchMessages();
     };
 
     const handleNewMessageChange = (event) => {
@@ -120,6 +118,24 @@ export const Application = () => {
         navigate("/login")
     }
 
+    const onScroll = () => {
+        if (scrollRef.current) {
+            const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+            if (scrollTop + clientHeight === scrollHeight) {
+                fetchMessages();
+            }
+        }
+    };
+
+    const scrollToTop = () => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     return (
         <div className="h-full w-full">
             <div className="fixed w-full bg-white shadow">
@@ -136,45 +152,40 @@ export const Application = () => {
                 </div>
             </div>
 
+            <div className="h-full w-full flex flex-row justify-center items-center">
+                <div className="h-[70vh] mt-[15vh] w-2/3 overflow-y-auto flex flex-col bg-gray-200 shadow-xl px-5"
+                onScroll={onScroll} ref={scrollRef}>
+                    {messages.map((message, index) => (
+                        message.user_id === session.idToken.payload.sub ? (
+                            <OwnMessage
+                                key={index}
+                                date={message.date}
+                                content={message.content}
+                            />
+                        ) : (
+                            <Message
+                                key={index}
+                                userId={message.user_id}
+                                date={message.date}
+                                content={message.content}
+                            />
+                        )
+                    ))}
 
-            <div className="h-full flex flex-col mx-[150px] pt-[60px] pb-[70px] bg-gray-200 shadow px-5">
-                {messages.map((message, index) => (
-                            message.user_id === session.idToken.payload.sub ? (
-                                <OwnMessage
-                                    key={index}
-                                    date={message.date}
-                                    content={message.content}
-                                />
-                            ) : (
-                                <Message
-                                    key={index}
-                                    userId={message.user_id}
-                                    date={message.date}
-                                    content={message.content}
-                                />
-                            )
-                        ))}
+                    {isLoadingMessages &&
+                        <div className="flex justify-center items-center">
+                            <BeatLoader color="#4A90E2" size={15} />
+                        </div>}
 
-                {isLoadingMessages &&
-                    <div className="flex justify-center items-center">
-                        <BeatLoader color="#4A90E2" size={15} />
-                    </div>}
-
-                {hasMoreMessages &&
-                    <button
-                        onClick={loadMoreMessages}
-                        className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                        Load More Messages
-                    </button>
-                }
-
+                </div>
             </div>
+
+
 
             <div className="fixed bottom-[70px] right-[20px] z-50 w-[50px] h-[50px]">
                 <button
                     className="bg-blue-500 w-full h-full text-white font-bold py-2 px-4 rounded-full shadow-xl"
-                    onClick={()=> window.scrollTo({top: 0, behavior: 'smooth'})}>
+                    onClick={scrollToTop}>
                     <ChevronUpIcon></ChevronUpIcon>
                 </button>
             </div>
