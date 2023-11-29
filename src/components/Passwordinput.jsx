@@ -5,7 +5,6 @@ const PasswordInput = ({ value,placeholder, onChange }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = (event) => {
-        event.preventDefault()
         setShowPassword(!showPassword);
     };
 
@@ -20,6 +19,7 @@ const PasswordInput = ({ value,placeholder, onChange }) => {
             />
             <button
                 className=""
+                type="button"
                 onClick={togglePasswordVisibility}
             >
                 {showPassword ? (
