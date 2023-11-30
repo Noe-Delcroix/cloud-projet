@@ -1,5 +1,5 @@
 export const Message = ({ userId, date, content }) => {
-    const isBot = userId.includes('[bot]');
+    const isBot = userId?.includes('[bot]');
 
     return (
         <div className="w-full flex flex-row justify-start">
