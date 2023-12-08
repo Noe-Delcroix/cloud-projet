@@ -121,7 +121,7 @@ export const Application = () => {
     const onScroll = () => {
         if (scrollRef.current) {
             const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
-            if (scrollTop + clientHeight === scrollHeight) {
+            if (scrollTop + clientHeight >= scrollHeight * 0.95) {
                 fetchMessages();
             }
         }
