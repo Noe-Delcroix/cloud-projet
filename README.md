@@ -1,12 +1,12 @@
-# Projet Cloud
+# Projet Cloud - IMT 2e année
 
-## RAF :
-- [ ] Responsive
-- [ ] Scroll infini sans le bouton
-- [ ] Bot météo
+## Description du projet
+Projet de cloud consistant en une application web permettant d'envoyer des messages.
 
-- [ ] Schéma structure
-- [ ] Analyse prévisionnelle des chiffres
+## Architecture du projet
+
+![schema architecture](./resources/schéma-architecture.png)
+Schéma de l'architecture AWS du projet
 
 ## Configuration
 
