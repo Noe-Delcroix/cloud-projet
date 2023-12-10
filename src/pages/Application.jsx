@@ -23,6 +23,8 @@ export const Application = () => {
     const [isSendingMessage, setIsSendingMessage] = useState(false);
 
     const scrollRef = useRef(null);
+    const [showScrollToTopButton, setShowScrollToTopButton] = useState(false);
+
 
     useEffect(() => {
         if (!session) {
@@ -125,6 +127,7 @@ export const Application = () => {
             if (scrollTop + clientHeight >= scrollHeight * 0.95) {
                 fetchMessages();
             }
+            setShowScrollToTopButton(scrollTop > 500);
         }
     };
 
@@ -208,13 +211,14 @@ export const Application = () => {
                         </div>}
 
                 </div>
-                {/*<div className="fixed bottom-[70px] right-[20px] z-50 w-[50px] h-[50px]">*/}
-                {/*    <button*/}
-                {/*        className="bg-blue-500 w-full h-full text-white font-bold py-2 px-4 rounded-full shadow-xl"*/}
-                {/*        onClick={scrollToTop}>*/}
-                {/*        <ChevronUpIcon></ChevronUpIcon>*/}
-                {/*    </button>*/}
-                {/*</div>*/}
+
+                <div className={`md:bottom-[20px] md:right-[20px] fixed bottom-[90px] right-[20px] z-50 w-[50px] h-[50px] ${showScrollToTopButton ? 'block' : 'hidden'}`}>
+                    <button
+                        className="bg-blue-500 w-full h-full text-white font-bold py-2 px-4 rounded-full shadow-xl"
+                        onClick={scrollToTop}>
+                        <ChevronUpIcon></ChevronUpIcon>
+                    </button>
+                </div>
 
                 <div className="md:w-2/3 w-full p-4 bg-white shadow">
                     <div className="flex gap-2">
