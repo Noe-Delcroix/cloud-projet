@@ -97,12 +97,11 @@ export const Application = () => {
 
             setNewMessage('');
             setIsSendingMessage(false)
-            window.scrollTo({top: 0, behavior: 'smooth'})
+            scrollToTop();
         } catch (error) {
             toast.error(`Failed to send message: ${error}`);
             setIsSendingMessage(false)
         }
-
     };
 
     const handleKeyPress = (event) => {
