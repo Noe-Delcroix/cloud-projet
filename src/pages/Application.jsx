@@ -5,6 +5,7 @@ import axios from "axios";
 import {Message} from "../components/Message";
 import {OwnMessage} from "../components/OwnMessage";
 import {BeatLoader} from "react-spinners";
+import {format, isSameDay, parseISO, startOfDay} from 'date-fns';
 import {ChevronUpIcon} from "@heroicons/react/solid";
 
 export const Application = () => {
@@ -136,6 +137,24 @@ export const Application = () => {
         }
     };
 
+
+    const groupedMessages = () => {
+        const grouped = [];
+        let lastDate = null;
+
+        const today = startOfDay(new Date());
+        messages.forEach(message => {
+            const messageDate = parseISO(message.date);
+            if ((!lastDate || !isSameDay(lastDate, messageDate)) && !isSameDay(messageDate, today)) {
+                grouped.push({ type: 'date', date: messageDate });
+                lastDate = messageDate;
+            }
+            grouped.push(message);
+        });
+
+        return grouped;
+    };
+
     return (
         <div className="h-[100vh] w-[100-vw]">
             <div className="fixed top-0 w-full bg-white shadow h-[60px]">
@@ -158,20 +177,28 @@ export const Application = () => {
             <div className="h-full w-full flex flex-col justify-center items-center shadow-xl">
                 <div className="md:h-2/3 h-full md:w-2/3 w-full overflow-y-auto flex flex-col bg-gray-100 px-5 md:mt-0 mt-[60px]"
                 onScroll={onScroll} ref={scrollRef}>
-                    {messages.map((message, index) => (
-                        message.user_id === session.idToken.payload.sub ? (
-                            <OwnMessage
-                                key={index}
-                                date={message.date}
-                                content={message.content}
-                            />
+
+                    {groupedMessages().map((item, index) => (
+                        item.type === 'date' ? (
+                            <div key={index}
+                                 className="text-center text-gray-500 text-sm py-2 border-b-2">
+                                {format(item.date, 'EEEE d MMMM yyyy')}
+                            </div>
                         ) : (
-                            <Message
-                                key={index}
-                                userId={message.user_id}
-                                date={message.date}
-                                content={message.content}
-                            />
+                            item.user_id === session.idToken.payload.sub ? (
+                                <OwnMessage
+                                    key={index}
+                                    date={item.date}
+                                    content={item.content}
+                                />
+                            ) : (
+                                <Message
+                                    key={index}
+                                    userId={item.user_id}
+                                    date={item.date}
+                                    content={item.content}
+                                />
+                            )
                         )
                     ))}
 
@@ -210,9 +237,6 @@ export const Application = () => {
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     )
 }
