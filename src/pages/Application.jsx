@@ -140,9 +140,12 @@ export const Application = () => {
         <div className="h-[100vh] w-[100-vw]">
             <div className="fixed top-0 w-full bg-white shadow h-[60px]">
                 <div className="w-full flex flex-row items-center justify-between px-5 py-2">
-                    <p className="text-3xl font-bold">Cloud App</p>
                     <div className="flex flex-row items-center">
-                        <p className="mr-3 font-bold sm:block hidden">Logged as {session.idToken?.payload?.nickname}</p>
+                        <img className="w-[50px]" src={`${process.env.PUBLIC_URL}/logo.png`} alt="logo" />
+                        <p className="text-3xl ml-4 font-bold sm:block hidden">ThunderChat</p>
+                    </div>
+                    <div className="flex flex-row items-center">
+                        <p className="mr-3 font-bold ">Logged as {session.idToken?.payload?.nickname}</p>
                         <p className="mr-3 text-[0.7em] md:block hidden">(aka "{session.idToken?.payload?.sub}")</p>
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={logout}>
                             Log out
