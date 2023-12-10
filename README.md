@@ -1,5 +1,10 @@
 # Projet Cloud - IMT 2e année
 
+## RAF
+- [ ] Logo/titre tab
+- [ ] bouton pour rescroll tout en haut
+- [ ] séparateur par jour chat
+
 ## Description du projet
 Projet de cloud consistant en une application web permettant d'envoyer des messages.
 
