@@ -1,12 +1,9 @@
 # Projet Cloud - IMT 2e année
 
-## RAF
-- [ ] Logo/titre tab
-- [ ] bouton pour rescroll tout en haut
-- [ ] séparateur par jour chat
-
 ## Description du projet
 Projet de cloud consistant en une application web permettant d'envoyer des messages.
+
+Lien du site déployé sur s3 : http://s3-thunder-web.s3-website-eu-west-1.amazonaws.com/
 
 ## Architecture du projet
 
